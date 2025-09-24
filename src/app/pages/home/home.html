@@ -1,0 +1,33 @@
+<div
+  class="w-full h-screen flex items-center py-5 flex-col chat-bg"
+  [ngClass]="messages.length !== 0 ? 'justify-end' : 'justify-center'"
+>
+ 
+
+  <button
+    (click)="handleLoginOut()"
+    class="absolute right-0 top-0 hover:text-white transition w-20 h-[50px] text-orange-400 text-[16px] rounded-md cursor-pointer mt-5"
+  >
+    <mat-icon>logout</mat-icon>
+  </button>
+
+  @if(messages.length === 0){
+  <div class="flex flex-col items-center mb-10">
+    <div class="black-icon w-[400px] h-[400px] -m-24"></div>
+    <h1
+      class="xl:text-6xl lg:text-5xl text-4xl font-extrabold bg-gradient-to-r from-orange-600 via-white to-orange-700 bg-clip-text text-transparent"
+    >
+      Welcome back!
+    </h1>
+    <p class="text-gray-300">What are we going to do today?</p>
+  </div>
+  } @else{
+  <app-message-list
+    [messages]="messages"
+    class="xl:w-[60%] lg:w-[70%] w-[80%] mb-2 rounded-md bg-transparent backdrop-blur-2xl h-[70vh] max-h-[70vh] overflow-y-auto"
+  />}
+  <app-chat-box
+    (send)="onSendMessage($event)"
+    class="xl:w-[60%] lg:w-[70%] w-[80%]"
+  />
+</div>

@@ -1,0 +1,56 @@
+<div class="w-full h-screen flex items-center justify-center bg-img">
+  <div class="bg-transparent backdrop-blur-2xl w-[400px] h-[500px] rounded-md">
+    <form [formGroup]="form" class="align-center justify-center flex w-full flex-col h-full p-5 px-10">
+      <div class="pb-5 flex flex-col w-full item-center justify-center">
+        <div class="bot-img w-[100px] h-[100px] -m-5 self-center"></div>
+        <h1 class="text-2xl w-full text-center">Welcome Back!</h1>
+      </div>
+
+
+      <div class="flex flex-col mb-5">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          placeholder="Enter your username"
+          formControlName="username"
+          class="mt-1 bg-zinc-700 py-3 px-5 rounded-md transition focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder-gray-400 placeholder:italic placeholder:text-sm placeholder:text-gray-300"
+        />
+
+      </div>
+
+      <div class="flex flex-col">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          formControlName="password"
+          class="mt-1 bg-zinc-700 py-3 px-5 rounded-md transition focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder-gray-400 placeholder:italic placeholder:text-sm placeholder:text-gray-300"
+        />
+        @if(form.controls['password'].errors?.['minlength'] &&
+        form.controls['password'].touched) {
+        <p class="text-red-300 text-[11px]">
+          Password must be more than 5 characters
+        </p>
+        } @if(form.controls['password'].errors?.['required'] &&
+        form.controls['password'].touched) {
+        <p class="text-red-300 text-[11px]">Password is required</p>
+        }
+      </div>
+      <div class="flex justify-between my-3">
+        <div class="flex items-center justify-center">
+            <input type="checkbox" for="remember" name="remember" id="" class="accent-orange-400 custom-radio mr-2 w-4 bg-red-500">
+            <label id="remember" >Remember me</label>
+        </div>
+        <div class="flex align-center justify-center text-orange-400">
+            <p>Forgot password?</p>
+        </div>
+      </div>
+      <button (click)="handleLogin()" class="active:bg-orange-500 transition w-full h-[50px] bg-orange-400 text-[16px] rounded-md cursor-pointer mt-5">Login</button>
+      <p class="text-center my-2">Don't have an account? 
+        <span class="text-orange-400 cursor-pointer" routerLink="/register">Register</span>
+      </p>
+    </form>
+  </div>
+</div>
