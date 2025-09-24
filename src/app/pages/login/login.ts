@@ -26,7 +26,12 @@ export class Login {
   router = inject(Router)
 
   handleLogin() {
-    this.router.navigate(['home'])    
+    if(this.form.value.password && this.form.value.username){
+      this.router.navigate(['home'])    
+    }
+    else{
+      alert("Please Fill Blank Fields")
+    }
   }
-
+   
 }
