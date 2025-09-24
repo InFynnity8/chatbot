@@ -1,6 +1,6 @@
 <div class="message-list">
-  @for( message of messages; track message.id ) {
-  <div [class]="message.sender === 'user' ? 'message user' : 'message bot'">
+  @for( message of messages; track message.text ) {
+  <div  [class]="message.sender === 'user' ? 'message user' : 'message bot'">
      @if(message.sender === 'bot'){<div class="bot-img w-[80px] h-[80px] -m-3"></div>}
     <div class="message-content">{{ message.text }}</div>
     <div class="timestamp">{{ message.timestamp | date : "shortTime" }}</div>
