@@ -1,33 +1,33 @@
 <div class="w-full h-screen flex items-center justify-center bg-img">
-  <div class="bg-transparent backdrop-blur-2xl w-[400px] h-[500px] rounded-md">
+  <div class="bg-zinc-900 backdrop-blur-2xl w-[400px] h-[500px] rounded-md">
     <form
       [formGroup]="form"
       class="align-center justify-center flex w-full flex-col h-full p-10"
     >
       <div class="pb-5 flex flex-col w-full item-center justify-center">
         <div class="bot-img w-[100px] h-[100px] -m-5 self-center"></div>
-        <h1 class="text-2xl text-center">Hey, Great to have you here!</h1>
+        <h1 class="text-2xl text-center text-white">Hey, Great to have you here!</h1>
       </div>
 
       <div class="flex flex-col mb-5">
-        <label for="username">Username</label>
+        <label for="username" class=" text-white">Username</label>
         <input
           type="text"
           id="username"
           placeholder="Enter your username"
           formControlName="username"
-          class="mt-1 bg-zinc-700 py-3 px-5 rounded-md transition focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder-gray-400 placeholder:italic placeholder:text-sm placeholder:text-gray-300"
+          class="text-white mt-1 bg-zinc-700 py-3 px-5 rounded-md transition focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder-gray-400 placeholder:italic placeholder:text-sm placeholder:text-gray-300"
         />
       </div>
 
       <div class="flex flex-col">
-        <label for="password">Password</label>
+        <label for="password" class=" text-white">Password</label>
         <input
           type="password"
           id="password"
           placeholder="Enter your password"
           formControlName="password"
-          class="mt-1 bg-zinc-700 py-3 px-5 rounded-md transition focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder-gray-400 placeholder:italic placeholder:text-sm placeholder:text-gray-300"
+          class="text-white mt-1 bg-zinc-700 py-3 px-5 rounded-md transition focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder-gray-400 placeholder:italic placeholder:text-sm placeholder:text-gray-300"
         />
         @if(form.controls['password'].errors?.['minlength'] &&
         form.controls['password'].touched) {
@@ -47,11 +47,11 @@
       </div> -->
       <button
         (click)="handleRegister()"
-        class="w-full h-[50px] active:bg-orange-500 transition bg-orange-400 text-[16px] rounded-md cursor-pointer mt-5"
+        class="w-full h-[50px] active:bg-orange-500 transition bg-orange-400 text-white text-[16px] rounded-md cursor-pointer mt-5"
       >
         Register
       </button>
-      <p class="text-center my-2">
+      <p class="text-center my-2  text-white">
         Already have an account?
         <span class="text-orange-400 cursor-pointer" routerLink="/login"
           >Login</span
