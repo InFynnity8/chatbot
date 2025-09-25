@@ -23,15 +23,25 @@ export class Login {
     ]),
   });
 
-  router = inject(Router)
+  router = inject(Router);
 
   handleLogin() {
-    if(this.form.value.password && this.form.value.username){
-      this.router.navigate(['home'])    
+    let raw = localStorage.getItem('credentials');
+    console.log(raw)
+    let credentials = raw ? JSON.parse(raw) : null;
+    console.log(credentials)
+    if(credentials === null) {
+      alert("Please create an account before logging in")
+      this.router.navigate(['register']);
+      return
     }
-    else{
-      alert("Please Fill Blank Fields")
+
+    if (credentials.username !== this.form.value.username) {
+      alert('Username incorrect or does not exit');
+    } else if (credentials.password !== this.form.value.password) {
+      alert('Password incorrect or does not exit');
+    } else {
+      this.router.navigate(['home']);
     }
   }
-   
 }

@@ -14,7 +14,6 @@ export class ChatModel {
   constructor(private http: HttpClient) {}
 
   sendMessage(message: string): Observable<string> {
-    console.log(message)
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.apiKey}`,
       'Content-Type': 'application/json',
@@ -33,7 +32,6 @@ export class ChatModel {
           if (Array.isArray(response) && response[0]?.generated_text) {
             return response[0].generated_text;
           }
-          console.log(response.choices[0].message.content)
           return response.choices[0].message.content;
 
         })

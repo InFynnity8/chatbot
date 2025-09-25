@@ -13,16 +13,16 @@
   <div class="flex flex-col items-center mb-10">
     <div class="black-icon w-[400px] h-[400px] -m-24"></div>
     <h1
-      class="xl:text-6xl lg:text-5xl text-4xl font-extrabold bg-gradient-to-r from-orange-600 via-white to-orange-700 bg-clip-text text-transparent"
+      class="h-16 xl:text-6xl lg:text-5xl text-4xl font-extrabold bg-gradient-to-r from-orange-600 via-white to-orange-700 bg-clip-text text-transparent"
     >
-      Welcome back!
+      Welcome {{username()}}!
     </h1>
     <p class="text-gray-300">What are we going to do today?</p>
   </div>
   } @else{
   <app-message-list
     [messages]="messages"
-    class="xl:w-[60%] lg:w-[70%] w-[80%] h-[70vh] max-h-[70vh] flex items-center "
+    class="xl:w-[60%] lg:w-[70%] w-[80%] h-[100vh] flex items-center "
   />}
   <app-chat-box
     (send)="onSendMessage($event)"

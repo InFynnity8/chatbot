@@ -21,13 +21,15 @@ export class Register {
       Validators.required,
       Validators.minLength(5),
     ]),
+    confirmPassword: new FormControl<string>('')
   });
 
   router  = inject(Router)
 
   handleRegister(){
-    if(this.form.value.password && this.form.value.username){
-      this.router.navigate(['home'])    
+    if(this.form.value.password && this.form.value.username && this.form.value.confirmPassword){
+      localStorage.setItem('credentials', JSON.stringify({username: this.form.value.username , password: this.form.value.password }))
+      this.router.navigate(['login'])    
     }
     else{
       alert("Please Fill Blank Fields")

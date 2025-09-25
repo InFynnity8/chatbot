@@ -1,8 +1,8 @@
 import {
-  AfterViewChecked,
   Component,
   ElementRef,
   inject,
+  signal,
   ViewChild,
 } from '@angular/core';
 import { ChatBox } from '../../components/chat-box/chat-box';
@@ -26,29 +26,18 @@ interface Message {
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home implements AfterViewChecked {
+export class Home  {
   router = inject(Router);
   huggingFace = inject(ChatModel);
   messages: Message[] = [];
   @ViewChild('scrollContainer') private scrollContainer?: ElementRef;
+  username = signal('')
 
-  constructor(private sanitizer: DomSanitizer) {}
-  ngAfterViewChecked() {
-    this.scrollToBottom();
+  constructor(private sanitizer: DomSanitizer) {
+    let credentials = JSON.parse(localStorage.getItem('credentials')!)
+    this.username.set(credentials.username)
   }
-
-  private scrollToBottom(): void {
-    try {
-      if (this.scrollContainer) {
-        const el = this.scrollContainer.nativeElement;
-        el.scrollTop = el.scrollHeight;
-        console.log("something scrolled")
-      }
-    } catch (err) {
-      console.error('Auto-scroll failed:', err);
-    }
-  }
-
+  
   private formatResponse(text: string): SafeHtml {
     if (!text) return '';
 
@@ -79,7 +68,6 @@ export class Home implements AfterViewChecked {
           sender: 'bot',
           timestamp: new Date(),
         };
-        this.scrollToBottom();
       },
       error: (err) => {
         console.error(err);
@@ -88,12 +76,12 @@ export class Home implements AfterViewChecked {
           sender: 'bot',
           timestamp: new Date(),
         };
-        this.scrollToBottom();
       },
     });
   }
 
   handleLoginOut() {
+    localStorage.removeItem('credentials')
     this.router.navigate(['login']);
   }
 }
