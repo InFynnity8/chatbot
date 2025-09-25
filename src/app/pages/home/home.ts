@@ -1,9 +1,7 @@
 import {
   Component,
-  ElementRef,
   inject,
   signal,
-  ViewChild,
 } from '@angular/core';
 import { ChatBox } from '../../components/chat-box/chat-box';
 import { MessageList } from '../../components/message-list/message-list';
@@ -30,7 +28,6 @@ export class Home  {
   router = inject(Router);
   huggingFace = inject(ChatModel);
   messages: Message[] = [];
-  @ViewChild('scrollContainer') private scrollContainer?: ElementRef;
   username = signal('')
 
   constructor(private sanitizer: DomSanitizer) {
@@ -41,7 +38,7 @@ export class Home  {
   private formatResponse(text: string): SafeHtml {
     if (!text) return '';
 
-    const rawHtml = marked.parse(text) as string; // converts Markdown → HTML
+    const rawHtml = marked.parse(text) as string; 
     return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
   }
 
