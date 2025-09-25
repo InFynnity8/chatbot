@@ -19,7 +19,7 @@ export class ChatModel {
     });
 
     const payload = {
-      model: 'deepseek-ai/DeepSeek-V3.1-Terminus:novita',
+      model: 'Qwen/Qwen2.5-72B-Instruct',
       messages: [
         {
           role: 'system',
