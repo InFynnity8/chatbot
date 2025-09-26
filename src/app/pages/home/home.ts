@@ -82,7 +82,7 @@ export class Home {
 
     const loadingIndex =
       this.messages.push({
-        text: '...',
+        text: 'Thinking',
         sender: 'bot',
         timestamp: new Date(),
       }) - 1;
