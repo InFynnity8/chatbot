@@ -1,8 +1,4 @@
-import {
-  Component,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ChatBox } from '../../components/chat-box/chat-box';
 import { MessageList } from '../../components/message-list/message-list';
 import { NgClass } from '@angular/common';
@@ -18,27 +14,60 @@ interface Message {
   timestamp: Date;
 }
 
+interface Credentials {
+  username: string;
+  password: string;
+}
+
 @Component({
   selector: 'app-home',
   imports: [ChatBox, MessageList, NgClass, MatIconModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home  {
+export class Home {
   router = inject(Router);
   huggingFace = inject(ChatModel);
   messages: Message[] = [];
-  username = signal('')
+  username = signal('');
+
+  private startThinkingAnimation(index: number) {
+    let dots = 0;
+    const interval = setInterval(() => {
+      dots = (dots + 1) % 4; // cycle 0-3
+      this.messages[index].text = `Thinking${'.'.repeat(dots)}`;
+    }, 500);
+
+    return interval;
+  }
+
+  private typeWriterEffect(fullText: string, index: number, speed = 30) {
+    let current = '';
+    let i = 0;
+
+    const interval = setInterval(() => {
+      current += fullText[i];
+      this.messages[index].text = this.formatResponse(current);
+      i++;
+
+      if (i >= fullText.length) {
+        clearInterval(interval);
+      }
+    }, speed);
+  }
 
   constructor(private sanitizer: DomSanitizer) {
-    let credentials = JSON.parse(localStorage.getItem('credentials')!)
-    this.username.set(credentials.username)
+    const stored = localStorage.getItem('credentials');
+    if (stored) {
+      const credentials: Credentials = JSON.parse(stored);
+      this.username.set(credentials.username ?? '');
+    }
   }
-  
+
   private formatResponse(text: string): SafeHtml {
     if (!text) return '';
 
-    const rawHtml = marked.parse(text) as string; 
+    const rawHtml = marked.parse(text) as string;
     return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
   }
 
@@ -52,19 +81,22 @@ export class Home  {
 
     const loadingIndex =
       this.messages.push({
-        text: '🤖 Thinking...',
+        text: 'Thinking',
         sender: 'bot',
         timestamp: new Date(),
       }) - 1;
+    const animation = this.startThinkingAnimation(loadingIndex);
 
     // call API via service
     this.huggingFace.sendMessage(message).subscribe({
       next: (response) => {
+        clearInterval(animation);
         this.messages[loadingIndex] = {
-          text: this.formatResponse(response),
+          text: '',
           sender: 'bot',
           timestamp: new Date(),
         };
+        this.typeWriterEffect(response, loadingIndex, 5);
       },
       error: (err) => {
         console.error(err);
@@ -78,7 +110,7 @@ export class Home  {
   }
 
   handleLoginOut() {
-    localStorage.removeItem('credentials')
+    localStorage.removeItem('credentials');
     this.router.navigate(['login']);
   }
 }
