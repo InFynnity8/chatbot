@@ -27,7 +27,6 @@ export class Login {
 
   handleLogin() {
     let raw = localStorage.getItem('credentials');
-    console.log(raw)
     let credentials = raw ? JSON.parse(raw) : null;
     console.log(credentials)
     if(credentials === null) {
