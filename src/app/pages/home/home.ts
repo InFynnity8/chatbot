@@ -28,6 +28,7 @@ interface Credentials {
 })
 export class Home {
   private destroy$ = new Subject<void>();
+  private intervals: number[] = [];
 
 
   router = inject(Router);
@@ -42,7 +43,7 @@ export class Home {
       dots = (dots + 1) % 4; // cycle 0-3
       this.messages[index].text = `Thinking${'.'.repeat(dots)}`;
     }, 500);
-
+  this.intervals.push(interval);
     return interval;
   }
 
@@ -59,6 +60,8 @@ export class Home {
         clearInterval(interval);
       }
     }, speed);
+      this.intervals.push(interval);
+
   }
 
   ngOnInit(): void {
@@ -79,7 +82,7 @@ export class Home {
 
     const loadingIndex =
       this.messages.push({
-        text: 'Thinking',
+        text: '...',
         sender: 'bot',
         timestamp: new Date(),
       }) - 1;
@@ -117,5 +120,6 @@ export class Home {
     ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+    this.intervals.forEach(clearInterval);
   }
 }
